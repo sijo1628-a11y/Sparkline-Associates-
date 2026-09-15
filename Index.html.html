@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sparkline Associates — Contact</title>
+<style>
+  :root{
+    --navy-deep:#050b1f;
+    --navy-panel:#0b1530;
+    --blue:#2f6df6;
+    --blue-soft:#4d8bff;
+    --gold:#f2b23c;
+    --gold-soft:#f6c766;
+    --ink-100:#f4f7ff;
+    --ink-300:#aeb9d6;
+    --ink-500:#7683a6;
+    --line:rgba(255,255,255,0.08);
+  }
+
+  *{box-sizing:border-box; min-width:0;}
+
+  html{
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
+
+  html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    max-width:100vw;
+    overflow-x:hidden;
+    background:var(--navy-deep);
+    color:var(--ink-100);
+    font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img, svg{ max-width:100%; }
+
+  a{color:inherit; text-decoration:none;}
+
+  .stage{
+    position:relative;
+    min-height:100vh;
+    width:100%;
+    max-width:100vw;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+  }
+
+  .stage::before,
+  .stage::after{
+    content:"";
+    position:absolute;
+    width:520px;
+    height:520px;
+    border-radius:50%;
+    border:1.5px solid;
+    pointer-events:none;
+  }
+  .stage::before{
+    top:-260px;
+    left:-260px;
+    border-color: rgba(79,139,255,0.55);
+    box-shadow: 0 0 60px rgba(79,139,255,0.15) inset;
+  }
+  .stage::after{
+    top:-220px;
+    right:-260px;
+    border-color: rgba(246,199,102,0.55);
+    box-shadow: 0 0 60px rgba(246,199,102,0.12) inset;
+  }
+
+  .glow-line{
+    position:absolute;
+    bottom:-140px;
+    left:-10%;
+    width:120%;
+    height:280px;
+    border-radius:50%;
+    background:
+      radial-gradient(closest-side, rgba(79,139,255,0.18), transparent 70%);
+    pointer-events:none;
+  }
+  .glow-line.gold{
+    bottom:-190px;
+    background:
+      radial-gradient(closest-side, rgba(246,199,102,0.12), transparent 70%);
+  }
+
+  .card{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:440px;
+    padding:56px 20px 40px;
+  }
+
+  /* ---------- Logo ---------- */
+  .logo-wrap{
+    text-align:center;
+    margin-bottom:6px;
+  }
+  .logo-svg{
+    width:min(92%, 360px);
+    height:auto;
+    display:inline-block;
+  }
+  .tagline-row{
+    text-align:center;
+    font-size:13px;
+    letter-spacing:0.16em;
+    color:var(--blue-soft);
+    font-weight:600;
+    margin-top:2px;
+  }
+  .tagline-row span.sep{
+    color:var(--gold);
+    margin:0 10px;
+    letter-spacing:normal;
+  }
+
+  .subtitle{
+    text-align:center;
+    margin:34px 0 30px;
+    font-size:17px;
+    color:var(--ink-300);
+    font-weight:400;
+    letter-spacing:0.01em;
+  }
+  .subtitle .dot{
+    color:var(--gold);
+    margin:0 12px;
+  }
+
+  /* ---------- Contact grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    margin-bottom:30px;
+  }
+  @media (min-width:520px){
+    .grid{grid-template-columns:1fr 1fr;}
+  }
+
+  .tile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 14px;
+    border-radius:14px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+    border:1px solid var(--line);
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+    cursor:pointer;
+  }
+  .tile:hover{
+    transform:translateY(-2px);
+  }
+  .tile:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:2px;
+  }
+
+  .tile.whatsapp{ border-color:rgba(60,201,120,0.45); }
+  .tile.call{ border-color:rgba(79,139,255,0.45); }
+  .tile.instagram{ border-color:rgba(214,80,180,0.4); }
+  .tile.email{ border-color:rgba(79,139,255,0.45); }
+  .tile.location{ border-color:rgba(230,80,90,0.45); }
+  .tile.website{ border-color:rgba(140,110,240,0.45); }
+
+  .tile .icon{
+    flex:0 0 auto;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .tile .icon svg{width:20px; height:20px;}
+
+  .icon.wa{background:#25d366;}
+  .icon.phone{background:#2f6df6;}
+  .icon.ig{background:linear-gradient(135deg,#f9ce34,#ee2a7b,#6228d7);}
+  .icon.mail{background:#2f6df6;}
+  .icon.pin{background:#e5484d;}
+  .icon.web{background:#7c5cf2;}
+
+  .tile .text{flex:1; min-width:0;}
+  .tile .label{
+    font-size:14px;
+    font-weight:700;
+    color:var(--ink-100);
+  }
+  .tile .value{
+    font-size:12.5px;
+    color:var(--ink-500);
+    margin-top:2px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .tile .chev{
+    flex:0 0 auto;
+    color:var(--ink-500);
+    font-size:16px;
+  }
+
+  /* ---------- CTA buttons ---------- */
+  .cta{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    width:100%;
+    padding:16px 20px;
+    border-radius:999px;
+    font-size:16px;
+    font-weight:700;
+    margin-bottom:14px;
+    border:1px solid transparent;
+    cursor:pointer;
+  }
+  .cta.primary{
+    background:linear-gradient(180deg, #3f7bff, #2a5fe0);
+    color:#fff;
+    box-shadow:0 0 26px rgba(63,123,255,0.45);
+  }
+  .cta.secondary{
+    background:transparent;
+    border-color:var(--gold);
+    color:var(--gold-soft);
+  }
+  .cta svg{width:18px; height:18px;}
+
+  footer{
+    text-align:center;
+    margin-top:34px;
+    color:var(--ink-500);
+  }
+  .footer-rule{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--ink-300);
+  }
+  .footer-rule::before,
+  .footer-rule::after{
+    content:"";
+    height:1px;
+    width:36px;
+    background:var(--gold);
+    opacity:0.6;
+  }
+  .footer-sub{
+    margin-top:8px;
+    font-size:12px;
+    letter-spacing:0.14em;
+    color:var(--ink-500);
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="glow-line"></div>
+  <div class="glow-line gold"></div>
+
+  <main class="card">
+
+    <div class="logo-wrap">
+      <svg class="logo-svg" viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sparkline Associates">
+        <text x="360" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="800" font-size="92" fill="#2f6df6" letter-spacing="-2">Sparkline</text>
+        <text x="360" y="158" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="600" font-size="30" fill="#aeb9d6" letter-spacing="9">ASSOCIATES</text>
+        <g transform="translate(462,10)">
+          <path d="M28 0 L34 22 L56 28 L34 34 L28 56 L22 34 L0 28 L22 22 Z" fill="#f2b23c"/>
+        </g>
+      </svg>
+      <div class="tagline-row">IT <span class="sep">|</span> TELECOM <span class="sep">|</span> SECURITY</div>
+    </div>
+
+    <p class="subtitle">Technology<span class="dot">•</span>Connectivity<span class="dot">•</span>Security</p>
+
+    <div class="grid">
+
+      <a class="tile whatsapp" href="https://wa.me/96899705793" target="_blank" rel="noopener">
+        <span class="icon wa">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1s.9 2.5 1.1 2.6c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.5.6.2 1.1.2 1.6.1.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.5 5.2L2 22l4.9-1.3C8.5 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3C4.4 15 4 13.5 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8z"/></svg>
+        </span>
+        <span class="text">
+          <span class="label">WhatsApp</span>
+          <span class="value">+968 9970 5793</span>
+        </span>
+        <span class="chev">›</span>
+      </a>
+
+      <a class="tile call" href="tel:+96899705793">
+        <span class="icon phone">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M6.6 10.8c1.4 2.7 3.7 5 6.4 6.4l2.1-2.1c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8z"/></svg>
+        </span>
+        <span class="text">
+          <span class="label">Call Us</span>
+          <span class="value">+968 9970 5793</span>
+        </span>
+        <span class="chev">›</span>
+      </a>
+
+      <a class="tile instagram" href="https://instagram.com/sparklineassociates" target="_blank" rel="noopener">
+        <span class="icon ig">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2c2.7 0 3.1 0 4.1.1 1 .1 1.7.2 2.3.5.6.3 1.1.6 1.6 1.1.5.5.8 1 1.1 1.6.3.6.4 1.3.5 2.3.1 1 .1 1.4.1 4.1s0 3.1-.1 4.1c-.1 1-.2 1.7-.5 2.3-.3.6-.6 1.1-1.1 1.6-.5.5-1 .8-1.6 1.1-.6.3-1.3.4-2.3.5-1 .1-1.4.1-4.1.1s-3.1 0-4.1-.1c-1-.1-1.7-.2-2.3-.5-.6-.3-1.1-.6-1.6-1.1-.5-.5-.8-1-1.1-1.6-.3-.6-.4-1.3-.5-2.3C2 15.1 2 14.7 2 12s0-3.1.1-4.1c.1-1 .2-1.7.5-2.3.3-.6.6-1.1 1.1-1.6.5-.5 1-.8 1.6-1.1.6-.3 1.3-.4 2.3-.5C8.9 2 9.3 2 12 2zm0 5a5 5 0 100 10 5 5 0 000-10zm0 8.2A3.2 3.2 0 1112 8.8a3.2 3.2 0 010 6.4zm5.4-8.4a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z"/></svg>
+        </span>
+        <span class="text">
+          <span class="label">Instagram</span>
+          <span class="value">@sparklineassociates</span>
+        </span>
+        <span class="chev">›</span>
+      </a>
+
+      <a class="tile email" href="mailto:mail@sparklineoman.com">
+        <span class="icon mail">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm0 2v.01L12 13l8-6.99V6H4zm16 12V8.24l-7.4 6.47a1 1 0 01-1.2 0L4 8.24V18h16z"/></svg>
+        </span>
+        <span class="text">
+          <span class="label">Email</span>
+          <span class="value">mail@sparklineoman.com</span>
+        </span>
+        <span class="chev">›</span>
+      </a>
+
+      <a class="tile location" href="https://www.google.com/maps/search/?api=1&query=Sparkline+Associates+Muscat+Oman" target="_blank" rel="noopener">
+        <span class="icon pin">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2c-4.4 0-8 3.6-8 8 0 5.4 7 11.5 7.3 11.8.2.1.5.2.7.2s.5-.1.7-.2C13 21.5 20 15.4 20 10c0-4.4-3.6-8-8-8zm0 11a3 3 0 110-6 3 3 0 010 6z"/></svg>
+        </span>
+        <span class="text">
+          <span class="label">Location</span>
+          <span class="value">Muscat, Oman</span>
+        </span>
+        <span class="chev">›</span>
+      </a>
+
+      <a class="tile website" href="https://www.sparklineoman.com" target="_blank" rel="noopener">
+        <span class="icon web">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.2c-.1-1.9-.5-3.6-1.1-5a8 8 0 014.3 5zM12 4.1c.8 1 1.6 3 1.8 4.9h-3.6c.2-1.9 1-3.9 1.8-4.9zM4.1 13h3.2c.1 1.9.5 3.6 1.1 5a8 8 0 01-4.3-5zm0-2a8 8 0 014.3-5c-.6 1.4-1 3.1-1.1 5H4.1zM12 19.9c-.8-1-1.6-3-1.8-4.9h3.6c-.2 1.9-1 3.9-1.8 4.9zm2.2-6.9H9.8c.1-1.8.5-3.4 1.1-4.7h.2c.6 1.3 1 2.9 1.1 4.7zm1.4 2h3.2a8 8 0 01-4.3 5c.6-1.4 1-3.1 1.1-5z"/></svg>
+        </span>
+        <span class="text">
+          <span class="label">Website</span>
+          <span class="value">www.sparklineoman.com</span>
+        </span>
+        <span class="chev">›</span>
+      </a>
+
+    </div>
+
+    <a class="cta primary" href="mailto:mail@sparklineoman.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+      Contact Us
+      <span aria-hidden="true">→</span>
+    </a>
+
+    <a class="cta secondary" href="https://www.google.com/maps/search/?api=1&query=Sparkline+Associates+Muscat+Oman" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-4.4 0-8 3.6-8 8 0 5.4 7 11.5 7.3 11.8.2.1.5.2.7.2s.5-.1.7-.2C13 21.5 20 15.4 20 10c0-4.4-3.6-8-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+      Get Directions
+      <span aria-hidden="true">→</span>
+    </a>
+
+    <footer>
+      <div class="footer-rule">Sparkline Associates</div>
+      <div class="footer-sub">IT&nbsp;&nbsp;|&nbsp;&nbsp;Telecom&nbsp;&nbsp;|&nbsp;&nbsp;Security</div>
+    </footer>
+
+  </main>
+</div>
+
+</body>
+</html>
