@@ -173,6 +173,65 @@
   .tile.email{ border-color:rgba(79,139,255,0.45); }
   .tile.website{ border-color:rgba(140,110,240,0.45); }
 
+  /* ---------- Game feature card ---------- */
+  .game-card{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:18px 18px;
+    border-radius:18px;
+    margin-bottom:28px;
+    background:linear-gradient(135deg, rgba(242,178,60,0.14), rgba(47,109,246,0.14));
+    border:1px solid rgba(242,178,60,0.5);
+    box-shadow:0 0 30px rgba(242,178,60,0.12);
+    cursor:pointer;
+  }
+  .game-card:hover{ transform:translateY(-2px); }
+  .game-card .icon{
+    flex:0 0 auto;
+    width:52px;
+    height:52px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg, var(--gold), #ff8a3d);
+    box-shadow:0 0 18px rgba(242,178,60,0.4);
+  }
+  .game-card .icon svg{width:28px; height:28px;}
+  .game-card .text{flex:1; min-width:0;}
+  .game-card .eyebrow{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.12em;
+    color:var(--gold-soft);
+    text-transform:uppercase;
+  }
+  .game-card .title{
+    font-size:18px;
+    font-weight:800;
+    color:var(--ink-100);
+    margin-top:2px;
+  }
+  .game-card .sub{
+    font-size:12.5px;
+    color:var(--ink-300);
+    margin-top:2px;
+  }
+  .game-card .play{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    color:var(--gold-soft);
+    font-size:16px;
+  }
+
   .tile .icon{
     flex:0 0 auto;
     width:40px;
@@ -288,6 +347,18 @@
     </div>
 
     <p class="subtitle">Technology<span class="dot">•</span>Connectivity<span class="dot">•</span>Security</p>
+
+    <a class="game-card" href="https://sparkline-run.lovable.app/?utm_id=97760_v0_s00_e0_tv4&fbclid=PAVERFWAUgbwFwZG9mAmZkaWQWUO_Np2ve5p4ta13Mi1n8CIci3p4GiWV4dG4DYWVtAjEwAHNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp6lE7_Vz3rv4uhOgOMwoVAxVagFqrVecKye_l8i3YBz0CMSq_yra6SsxBgmM_aem_gUUb56R5zNcuf-dz5IxZEA" target="_blank" rel="noopener">
+      <span class="icon">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M17 6H7a5 5 0 00-4.9 6.1l1 4.3a2.5 2.5 0 004.5.9L9 15h6l1.4 2.3a2.5 2.5 0 004.5-.9l1-4.3A5 5 0 0017 6zM8 13H6.5v1.5H5V13H3.5v-1.5H5V10h1.5v1.5H8V13zm6.2-.7a1.2 1.2 0 110-2.4 1.2 1.2 0 010 2.4zm2.6 2.6a1.2 1.2 0 110-2.4 1.2 1.2 0 010 2.4z"/></svg>
+      </span>
+      <span class="text">
+        <span class="eyebrow">Play the game</span>
+        <span class="title">Sparkline Run</span>
+        <span class="sub">Our own browser game — give it a try</span>
+      </span>
+      <span class="play">▶</span>
+    </a>
 
     <div class="grid">
 
